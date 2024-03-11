@@ -1,9 +1,3 @@
-
-@keyframes appear_animation {
-  0% {opacity: 0;}
-  100% {opacity: 1;}
-}
-
 .container {
 height: 323px;
 width: 280px;
@@ -127,4 +121,9 @@ color: #ffffff;
 
 .daysNotInAMonth {
 color: #999999;
+}
+
+@keyframes appear_animation {
+  0% {opacity: 0;}
+  100% {opacity: 1;}
 }

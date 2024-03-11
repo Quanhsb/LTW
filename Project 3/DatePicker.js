@@ -1,12 +1,8 @@
 "use strict";
-
-
 function DatePicker(id, callBackFunc) {
   this.id=id;
-  // call callBackFunc on click
   this.callBackFunc=callBackFunc;
 
-  // create container
   var containerClassName="container";
   var containerDiv=document.createElement("DIV");
   containerDiv.classList.add(containerClassName);
@@ -15,14 +11,11 @@ function DatePicker(id, callBackFunc) {
   this.containerDiv=containerDiv;
 }
 
-
 DatePicker.prototype.render=function(date) {
   var i,j;
-  // metadata for names of weeks and months
   var num2weekday=["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   var num2month=["January","Febuary","March","April","May","June","July","August","September","October","November","December"];
 
-  // a class
   function MyDate(date) {
     this.year=date.getFullYear();
     this.month=date.getMonth()+1;
@@ -35,11 +28,7 @@ DatePicker.prototype.render=function(date) {
     return this.month+"/"+this.day+"/"+this.year;
 
   };
-  // *** SOME HELPER FUNCTIONS***//
 
-  // a function that gets meta data of this month
-  // such as how many days are there and how to arrange the
-  // dates
   function getMonthDays(thisDate) {
     var startingDateStr=thisDate.month+"/1/"+thisDate.year;
     var dayOfMonth = new Date(startingDateStr);
@@ -61,12 +50,10 @@ DatePicker.prototype.render=function(date) {
     return arrangeDates(arrayOfDates);
   }
 
-  // a function that gets the month-year title of the datepicker
   function getMonthYear(thisDate) {
     return num2month[thisDate.month-1].toUpperCase()+" "+thisDate.year;
   }
 
-  // arrange an array of dats into weeks
   function arrangeDates(arrayOfDates) {
     var arrayOfWeeks=[];
     var oneWeek=[];
@@ -84,7 +71,7 @@ DatePicker.prototype.render=function(date) {
   function changeMonth(previousDate,amount) {
     var newDate=previousDate;
     if (amount===1) {
-      // increase by 1
+    
       if (newDate.month==12) {
         newDate.year=newDate.year+1;
         newDate.month=1;
@@ -92,7 +79,7 @@ DatePicker.prototype.render=function(date) {
         newDate.month=newDate.month+1;
       }
     } else {
-      // decrease by 1
+
       if (newDate.month==1) {
         newDate.year=newDate.year-1;
         newDate.month=12;
@@ -110,20 +97,12 @@ DatePicker.prototype.render=function(date) {
   var myDate=new MyDate(date);
 
 
-  // add container
   var containerDiv=this.containerDiv;
 
-
-  // add header bar (including the year and month)
   var headerBarClassName="headerBar";
   var headerBarDiv=document.createElement("DIV");
   headerBarDiv.classList.add(headerBarClassName);
   containerDiv.appendChild(headerBarDiv);
-
-
-  // add header bar (including the year and month)
-
-
 
   var monthButtomClassName="monthButtom";
   var prevMonthDiv= document.createElement("DIV");
@@ -131,7 +110,6 @@ DatePicker.prototype.render=function(date) {
   prevMonthDiv.innerHTML="<";
   headerBarDiv.appendChild(prevMonthDiv);
 
-  // make a copy of myDate
   var aDate=new MyDate(new Date());
   aDate.year=myDate.year;
   aDate.month=myDate.month;
@@ -145,14 +123,11 @@ DatePicker.prototype.render=function(date) {
     },false);
   })(aDate);
 
-  // add year and week name
   var monthYearBarClassName="monthYearBar";
   var monthYearBarDiv=document.createElement("DIV");
   monthYearBarDiv.classList.add(monthYearBarClassName);
   monthYearBarDiv.innerHTML=getMonthYear(myDate);
   headerBarDiv.appendChild(monthYearBarDiv);
-
-
 
   var nextMonthDiv= document.createElement("DIV");
   nextMonthDiv.classList.add(monthButtomClassName);
@@ -168,28 +143,21 @@ DatePicker.prototype.render=function(date) {
     },false);
   })(aDate);
 
-
-
-  // add weekday div
   var weekdayBarClassName="weekdayBar";
   var weekdayBarDiv=document.createElement("DIV");
   weekdayBarDiv.classList.add(weekdayBarClassName);
   containerDiv.appendChild(weekdayBarDiv);
 
-
-  //
   var paddingBarClassName="paddingBar";
   var paddingBarDiv=document.createElement("DIV");
   paddingBarDiv.classList.add(paddingBarClassName);
   containerDiv.appendChild(paddingBarDiv);
 
-  // add weekday div
   var weekdaysContainerClassName="weekdaysContainer";
   var weekdaysContainerDiv=document.createElement("DIV");
   weekdaysContainerDiv.classList.add(weekdaysContainerClassName);
   containerDiv.appendChild(weekdaysContainerDiv);
 
-  // add weekday names
   var weekdayNamesClassName="weekdayNames";
   var weekdayNamesDiv;
   for (i = 0;i<7;i++) {
@@ -198,10 +166,6 @@ DatePicker.prototype.render=function(date) {
     weekdayNamesDiv.classList.add(weekdayNamesClassName);
     weekdayBarDiv.appendChild(weekdayNamesDiv);
   }
-
-  // add days
-  // each day in the selected month should have a property
-  // that on fires on click
 
   var thisMonthDates=getMonthDays(myDate);
   var weekRowDiv;
@@ -233,7 +197,6 @@ DatePicker.prototype.render=function(date) {
           var selectedDate=oneWeekDays[j];
           (function(selectedDate,daysInAMonthDiv) {
             daysInAMonthDiv.addEventListener("click",function() {
-              //
 
               var arrOfAllDates=document.getElementById(self.id).getElementsByClassName(daysInAMonthClassName);
               var currentClassList;
@@ -242,11 +205,9 @@ DatePicker.prototype.render=function(date) {
               }
 
               daysInAMonthDiv.classList.add(selectedClassName);
-              // execute callBackFunc
               self.callBackFunc(self.id,selectedDate);
             },false);
           })(selectedDate,daysInAMonthDiv);
-          //
         } else {
           daysInAMonthDiv.classList.add(daysNotInAMonthClassName);
 
@@ -255,8 +216,4 @@ DatePicker.prototype.render=function(date) {
     }
 
   }
-
-  // on click right
-
-
 };
